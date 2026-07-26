@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>丘塏棋 Maggie - 互動式網頁履歷</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-main: #212529;
+      --text-muted: #6c757d;
+      --accent: #4a6cf7;
+      --accent-hover: #3b56d9;
+      --border-color: #e9ecef;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-main: #f8f9fa;
+      --text-muted: #a0a0a0;
+      --accent: #6c88ff;
+      --accent-hover: #5271ff;
+      --border-color: #2d2d2d;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      transition: var(--transition);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header & Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2.5rem;
+      align-items: center;
+      padding: 3rem 0;
+    }
+
+    .avatar-container {
+      position: relative;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #9b51e0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 0 auto;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-text h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-text .subtitle {
+      font-size: 1.2rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Interactive Section Tabs */
+    .section-title {
+      font-size: 1.8rem;
+      margin: 3rem 0 1.5rem 0;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 40px;
+      height: 4px;
+      background-color: var(--accent);
+      border-radius: 2px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1.2rem;
+      border: none;
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* Grid Cards for Skills / Experience */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.8rem;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Timeline Section */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+      border-left: 2px solid var(--border-color);
+      margin-top: 2rem;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.55rem;
+      top: 0.3rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      border: 3px solid var(--bg-color);
+    }
+
+    .timeline-date {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 0 1rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .contact-buttons {
+        justify-content: center;
+      }
+
+      .section-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .section-title {
+        display: block;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo">MAGGIE.DESIGN</div>
+      <button class="theme-toggle" id="themeToggle">
+        <i class="fa-solid fa-moon"></i>
+        <span>深色模式</span>
+      </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="avatar-container">
+        <div class="avatar">MK</div>
+      </div>
+      <div class="hero-text">
+        <h1>丘塏棋 (Maggie)</h1>
+        <div class="subtitle">資深視覺設計師 / 品牌行銷視覺專家</div>
+        <p>擁有超過 10 年專業平面與視覺設計經驗，精通電商平台視覺、商用精修圖、實體印刷預前作業與社群整合行銷。同時具備前端網頁概念，積極探索 UI/UX 領域。</p>
+        <div class="contact-buttons">
+          <a href="#contact" class="btn btn-primary"><i class="fa-regular fa-envelope"></i> 聯繫我</a>
+          <a href="#" class="btn btn-outline"><i class="fa-solid fa-download"></i> 下載 PDF 履歷</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Skills Section -->
+    <section>
+      <h2 class="section-title">核心專業與技能</h2>
+      
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" onclick="filterSkills('all')">全部技能</button>
+        <button class="tab-btn" onclick="filterSkills('visual')">視覺與電商</button>
+        <button class="tab-btn" onclick="filterSkills('print')">印刷與預前</button>
+        <button class="tab-btn" onclick="filterSkills('marketing')">社群與管理</button>
+        <button class="tab-btn" onclick="filterSkills('tech')">Web & UI/UX</button>
+      </div>
+
+      <!-- Skills Cards Grid -->
+      <div class="skills-grid" id="skillsGrid">
+        
+        <div class="card" data-category="visual">
+          <div class="card-icon"><i class="fa-solid fa-palette"></i></div>
+          <h3>電商與 Banner 視覺設計</h3>
+          <p>擅長各大購物平台 Banner 製作、視覺風格規劃、活動促銷頁面與品牌視覺一致性建立。</p>
+        </div>
+
+        <div class="card" data-category="visual">
+          <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <h3>美妝產品圖精修</h3>
+          <p>專業商用商品修圖，包含材質質感提升、光影修飾、去背與產品介紹切圖設計。</p>
+        </div>
+
+        <div class="card" data-category="print">
+          <div class="card-icon"><i class="fa-solid fa-print"></i></div>
+          <h3>實體印刷與預前溝通</h3>
+          <p>熟悉印前作業流程（DM、名片、票券、手冊、包裝盒），具備分色與印刷廠專業溝通經驗。</p>
+        </div>
+
+        <div class="card" data-category="marketing">
+          <div class="card-icon"><i class="fa-solid fa-comments"></i></div>
+          <h3>社群與 LINE 官方帳號經營</h3>
+          <p>具備社群圖文設計、LINE 官方帳號模組設置、圖文選單規劃、會員管理與基礎廣告投放。</p>
+        </div>
+
+        <div class="card" data-category="marketing">
+          <div class="card-icon"><i class="fa-solid fa-people-group"></i></div>
+          <h3>團隊領導與服務優化</h3>
+          <p>曾帶領第一線團隊服務客戶，優化整體服務與溝通流程，具備跨部門溝通與專案協調能力。</p>
+        </div>
+
+        <div class="card" data-category="tech">
+          <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+          <h3>Web 前端與 UI/UX 自學中</h3>
+          <p>具備基礎 HTML / CSS 概念，自學 UI/UX 設計規範與元件庫系統，能與前端工程師無縫接軌。</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section>
+      <h2 class="section-title">職涯歷程亮點</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">10+ 年經驗資歷</div>
+          <h3>資深平面 / 視覺設計師</h3>
+          <p>主導多項電商平台視覺、品牌行銷素材、產品包裝與印刷預前製作，維持品牌 CIS 一致性。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">團隊管理與服務優化</div>
+          <h3>團隊 Supervisor / 第一線主管經驗</h3>
+          <p>帶領客服與服務團隊，梳理服務流程，大幅提升溝通效率與客戶滿意度。</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">持續進修</div>
+          <h3>跨領域前端與 UI/UX 探索</h3>
+          <p>持續自我提升，結合視覺美學與數位網頁概念，打造優質的使用者視覺體驗。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <p>© 2026 丘塏棋 (Maggie). All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Theme Switcher (Dark / Light Mode)
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        body.removeAttribute('data-theme');
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> <span>深色模式</span>';
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> <span>淺色模式</span>';
+      }
+    });
+
+    // Skill Filter Interactive Tabs
+    function filterSkills(category) {
+      const cards = document.querySelectorAll('.card');
+      const tabs = document.querySelectorAll('.tab-btn');
+
+      // Update active tab button style
+      tabs.forEach(tab => {
+        if (tab.getAttribute('onclick').includes(category)) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // Filter skill cards with transition
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 50);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
