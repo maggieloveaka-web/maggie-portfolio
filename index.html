@@ -22,10 +22,11 @@
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       --transition: all 0.3s ease;
       
-      /* 箭頭卡片專屬顏色 (參考參考圖的三色搭配) */
-      --arrow-color-1: #00a8cc;
-      --arrow-color-2: #e85a71;
-      --arrow-color-3: #2b4162;
+      /* 4階段箭頭專屬漸進色彩系 */
+      --arrow-color-1: #00b4d8;
+      --arrow-color-2: #0077b6;
+      --arrow-color-3: #7209b7;
+      --arrow-color-4: #f72585;
     }
 
     [data-theme="dark"] {
@@ -38,9 +39,10 @@
       --border-color: #2d2d2d;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
-      --arrow-color-1: #008fae;
-      --arrow-color-2: #c94459;
-      --arrow-color-3: #3a547a;
+      --arrow-color-1: #0096b4;
+      --arrow-color-2: #005f92;
+      --arrow-color-3: #5a0792;
+      --arrow-color-4: #c91868;
     }
 
     * {
@@ -198,41 +200,46 @@
       border-radius: 2px;
     }
 
-    /* 箭頭連貫流程樣式 (Arrow Flow Container) */
+    /* 4 階段箭頭流程圖 (Arrow Flow Container) */
     .arrow-flow-container {
       display: flex;
       width: 100%;
       margin-top: 1.5rem;
       margin-bottom: 1rem;
-      gap: 4px; /* 箭頭接縫間距 */
+      gap: 4px;
     }
 
     .arrow-block {
       flex: 1;
       position: relative;
       color: white;
-      padding: 1.5rem 1.2rem 1.5rem 2.2rem;
+      padding: 1.4rem 1rem 1.4rem 1.8rem;
       cursor: pointer;
       user-select: none;
-      transition: transform 0.2s ease, filter 0.2s ease;
-      /* CSS clip-path 裁切出左凹右凸的完美箭頭 */
-      clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%, 20px 50%);
+      transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+      clip-path: polygon(0% 0%, calc(100% - 18px) 0%, 100% 50%, calc(100% - 18px) 100%, 0% 100%, 18px 50%);
     }
 
-    /* 第一個箭頭左邊不需要凹進去 */
+    /* 第一個箭頭左側不凹陷 */
     .arrow-block:first-child {
-      clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
-      padding-left: 1.5rem;
+      clip-path: polygon(0% 0%, calc(100% - 18px) 0%, 100% 50%, calc(100% - 18px) 100%, 0% 100%);
+      padding-left: 1.2rem;
     }
 
-    /* 多個箭頭的不同配色 */
+    /* 4 階段顏色配置 */
     .arrow-block.color-1 { background-color: var(--arrow-color-1); }
     .arrow-block.color-2 { background-color: var(--arrow-color-2); }
     .arrow-block.color-3 { background-color: var(--arrow-color-3); }
+    .arrow-block.color-4 { background-color: var(--arrow-color-4); }
 
     .arrow-block:hover {
-      filter: brightness(1.1);
-      transform: translateY(-2px);
+      filter: brightness(1.08);
+      transform: translateY(-3px);
+    }
+
+    .arrow-block.active {
+      filter: brightness(1.15);
+      outline: 2px solid white;
     }
 
     .arrow-content-header {
@@ -240,45 +247,40 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 0.3rem;
+      gap: 0.2rem;
     }
 
     .arrow-badge {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       background-color: rgba(255, 255, 255, 0.25);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 1rem;
       margin-bottom: 0.2rem;
     }
 
     .arrow-block h3 {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .arrow-block .company-name {
-      font-size: 0.85rem;
-      opacity: 0.9;
+      line-height: 1.3;
     }
 
     .arrow-block .period {
-      font-size: 0.8rem;
-      background-color: rgba(0, 0, 0, 0.15);
-      padding: 0.15rem 0.6rem;
-      border-radius: 12px;
+      font-size: 0.78rem;
+      background-color: rgba(0, 0, 0, 0.18);
+      padding: 0.1rem 0.5rem;
+      border-radius: 10px;
       margin-top: 0.4rem;
     }
 
     .arrow-toggle-icon {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       margin-top: 0.3rem;
-      opacity: 0.8;
+      opacity: 0.85;
       transition: transform 0.3s ease;
     }
 
@@ -286,38 +288,74 @@
       transform: rotate(180deg);
     }
 
-    /* 點擊箭頭後展開的詳細說明卡片 */
+    /* 點擊展開的詳細工作內容框 */
     .arrow-detail-box {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 0;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease-in-out, padding 0.3s ease, margin-top 0.3s ease;
+      transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), padding 0.3s ease, margin-top 0.3s ease;
       box-shadow: var(--shadow);
     }
 
     .arrow-detail-box.active {
-      max-height: 300px;
-      padding: 1.5rem;
-      margin-top: 0.8rem;
+      max-height: 500px;
+      padding: 1.5rem 1.8rem;
+      margin-top: 1rem;
     }
 
     .arrow-detail-box h4 {
       color: var(--accent);
-      margin-bottom: 0.6rem;
-      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .detail-company-block {
+      margin-bottom: 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .detail-company-block:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .detail-company-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-company-name {
+      color: var(--text-main);
+      font-size: 1rem;
+    }
+
+    .detail-company-time {
+      font-size: 0.85rem;
+      color: var(--accent);
+      background-color: rgba(74, 108, 247, 0.1);
+      padding: 0.1rem 0.6rem;
+      border-radius: 12px;
     }
 
     .arrow-detail-box ul {
       padding-left: 1.2rem;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 0.93rem;
     }
 
     .arrow-detail-box li {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
     }
 
     /* Interactive Section Tabs */
@@ -395,7 +433,7 @@
       margin-top: 4rem;
     }
 
-    /* Responsive Design for Mobile */
+    /* Mobile Responsive Design */
     @media (max-width: 768px) {
       .hero {
         grid-template-columns: 1fr;
@@ -421,7 +459,6 @@
         height: 150px;
       }
 
-      /* 手機上自動轉為垂直箭頭結構，避免壓縮文字 */
       .arrow-flow-container {
         flex-direction: column;
         gap: 8px;
@@ -462,21 +499,20 @@
       </div>
     </section>
 
-    <!-- 箭頭圖表式工作經歷 Section -->
+    <!-- 4 階段箭頭流程圖 Work Experience -->
     <section>
-      <h2 class="section-title">職涯歷程</h2>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1rem;">（點擊上方箭頭階段，可展開看詳細工作內容）</p>
+      <h2 class="section-title">職涯發展四大階段</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1rem;">（點擊上方箭頭階段，可展開看詳細公司與負責職責）</p>
       
-      <!-- 箭頭流程列 -->
+      <!-- 箭頭 Flow -->
       <div class="arrow-flow-container">
         
         <!-- 階段 1 -->
         <div class="arrow-block color-1" onclick="showDetail(1, this)">
           <div class="arrow-content-header">
             <div class="arrow-badge">1</div>
-            <h3>資深視覺設計</h3>
-            <span class="company-name">某某電商 / 品牌</span>
-            <span class="period">2021 - 至今</span>
+            <h3>門市實務與平面美編</h3>
+            <span class="period">2010 - 2018</span>
             <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
           </div>
         </div>
@@ -485,9 +521,8 @@
         <div class="arrow-block color-2" onclick="showDetail(2, this)">
           <div class="arrow-content-header">
             <div class="arrow-badge">2</div>
-            <h3>設計主管 / Supervisor</h3>
-            <span class="company-name">某某整合行銷</span>
-            <span class="period">2017 - 2021</span>
+            <h3>品牌行銷與課程規劃</h3>
+            <span class="period">2018 - 2020</span>
             <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
           </div>
         </div>
@@ -496,23 +531,30 @@
         <div class="arrow-block color-3" onclick="showDetail(3, this)">
           <div class="arrow-content-header">
             <div class="arrow-badge">3</div>
-            <h3>平面 / 視覺設計師</h3>
-            <span class="company-name">某某設計工作室</span>
-            <span class="period">2014 - 2017</span>
+            <h3>CIS 識別與產品開發</h3>
+            <span class="period">2020 - 2024</span>
+            <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
+          </div>
+        </div>
+
+        <!-- 階段 4 -->
+        <div class="arrow-block color-4" onclick="showDetail(4, this)">
+          <div class="arrow-content-header">
+            <div class="arrow-badge">4</div>
+            <h3>動態視覺與 VI 整合</h3>
+            <span class="period">2024 - 2026</span>
             <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
           </div>
         </div>
 
       </div>
 
-      <!-- 點擊後展開的內容顯示框 -->
+      <!-- 點擊後展開的內容區塊 -->
       <div class="arrow-detail-box" id="detailBox">
-        <h4 id="detailTitle">請點擊上方經歷階段</h4>
-        <ul id="detailList">
-          <li>主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃。</li>
-          <li>負責線下大型展覽與快閃店之視覺設計與實體場域佈展執行。</li>
-          <li>負責網站後台營運維護、商品內容上架與商用產品圖精修。</li>
-        </ul>
+        <h4 id="detailTitle"><i class="fa-solid fa-briefcase"></i> 經歷詳情</h4>
+        <div id="detailContent">
+          <!-- JS 自動動態渲染細節 -->
+        </div>
       </div>
     </section>
 
@@ -579,42 +621,69 @@
 
   <!-- JavaScript -->
   <script>
-    // 工作經歷資料數據庫
+    // 完整 8 段經歷整合進 4 大階段的結構資料
     const experienceData = {
       1: {
-        title: "資深視覺設計師 / 品牌行銷（某某知名電商 / 品牌公司）",
-        items: [
-          "主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃。",
-          "負責線下大型展覽與快閃店之視覺設計與實體場域佈展執行。",
-          "負責網站後台營運維護、商品內容上架與商用產品圖精修。"
+        stageName: "階段 1：門市實務、平面美編與陳列 (2010 - 2018)",
+        companies: [
+          {
+            name: "良基電腦",
+            time: "2010 - 2012 / 2016 - 2018",
+            duties: ["門市銷售業務與第一線顧客服務", "平面設計美編、行銷宣傳物製作與印前輸出對接"]
+          },
+          {
+            name: "安琪兒婦嬰百貨",
+            time: "2015 - 2016",
+            duties: ["平面設計美編與活動宣傳文宣製作", "實體門市商品陳列設計與賣場視覺美化"]
+          }
         ]
       },
       2: {
-        title: "團隊 Supervisor / 設計主管（某某企業 / 整合行銷公司）",
-        items: [
-          "管理跨部門專案與第一線服務團隊，優化專案時程與內部溝通流程。",
-          "負責實體印刷（DM、包裝盒、手冊）印前作業發包與印刷廠專業對接。",
-          "規劃社群（LINE 官方帳號 / IG / FB）視覺風格與互動行銷圖文。"
+        stageName: "階段 2：品牌行銷、視覺設計與課程規劃 (2018 - 2020)",
+        companies: [
+          {
+            name: "瑟琳娜美容",
+            time: "2018 - 2020",
+            duties: ["主導品牌行銷策略與視覺形象統一", "品牌平面設計、社群素材與活動宣傳佈局", "負責內部及對外培訓課程之素材與內容規劃"]
+          }
         ]
       },
       3: {
-        title: "平面 / 視覺設計師（某某設計工作室 / 公司）",
-        items: [
-          "商用高階精修圖製作、美妝/消費品去背與光影質感提升。",
-          "協助客戶建立品牌識別系統與實體印刷周邊商品設計。"
+        stageName: "階段 3：CIS 識別建立、產品開發與全方位整合 (2020 - 2024)",
+        companies: [
+          {
+            name: "東元心股份有限公司",
+            time: "2020 - 2022",
+            duties: ["平面設計與門市店面展示陳列規劃", "商業產品高階修圖與去背光影優化"]
+          },
+          {
+            name: "An藝術工坊",
+            time: "2022 - 2024",
+            duties: ["建立與擴充品牌 CIS 視覺識別系統", "參與產品開發流程與包裝視覺設計", "負責店面陳列佈置、品牌行銷與內部員工教育培訓"]
+          }
+        ]
+      },
+      4: {
+        stageName: "階段 4：VI 視覺系統、網站動態視覺與產品高階精修 (2024 - 2026)",
+        companies: [
+          {
+            name: "禾岳國際",
+            time: "2024 - 2026",
+            duties: ["主導完整 VI 品牌視覺系統與多管道應用規範", "網頁動態視覺設計 (Motion Graphics) 與互動體驗優化", "高階商用產品精修、門市陳列視覺與整體平面美編執行"]
+          }
         ]
       }
     };
 
-    // 箭頭點擊切換效果
     let currentStep = null;
+
     function showDetail(step, element) {
       const detailBox = document.getElementById('detailBox');
       const detailTitle = document.getElementById('detailTitle');
-      const detailList = document.getElementById('detailList');
+      const detailContent = document.getElementById('detailContent');
       const allArrows = document.querySelectorAll('.arrow-block');
 
-      // 如果點擊同一個，就收合
+      // 點擊已展開的階段則收合
       if (currentStep === step) {
         detailBox.classList.remove('active');
         element.classList.remove('active');
@@ -626,17 +695,33 @@
       allArrows.forEach(arrow => arrow.classList.remove('active'));
       element.classList.add('active');
 
-      // 更新內容
+      // 渲染對應資料
       const data = experienceData[step];
-      detailTitle.textContent = data.title;
-      detailList.innerHTML = data.items.map(item => `<li>${item}</li>`).join('');
+      detailTitle.innerHTML = `<i class="fa-solid fa-briefcase"></i> ${data.stageName}`;
+      
+      let htmlContent = "";
+      data.companies.forEach(company => {
+        htmlContent += `
+          <div class="detail-company-block">
+            <div class="detail-company-header">
+              <span class="detail-company-name">${company.name}</span>
+              <span class="detail-company-time">${company.time}</span>
+            </div>
+            <ul>
+              ${company.duties.map(d => `<li>${d}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      });
 
-      // 展開詳細框
+      detailContent.innerHTML = htmlContent;
+
+      // 滑暢展開
       detailBox.classList.add('active');
       currentStep = step;
     }
 
-    // Theme Switcher (Dark / Light Mode)
+    // 暗黑 / 淺色模式切換
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
@@ -651,7 +736,7 @@
       }
     });
 
-    // Skill Filter Interactive Tabs
+    // 技能篩選 Tabs
     function filterSkills(category) {
       const cards = document.querySelectorAll('.card');
       const tabs = document.querySelectorAll('.tab-btn');
@@ -680,6 +765,12 @@
         }
       });
     }
+
+    // 預設頁面載入時展開最新第 4 階段
+    window.addEventListener('DOMContentLoaded', () => {
+      const lastArrow = document.querySelectorAll('.arrow-block')[3];
+      showDetail(4, lastArrow);
+    });
   </script>
 </body>
 </html>
