@@ -189,55 +189,99 @@
       border-radius: 2px;
     }
 
-    /* Simple Work Experience Section */
-    .exp-summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
+    /* 點擊展開式線性工作經歷 (Accordion Timeline) */
+    .accordion-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
-    .exp-card {
+    .accordion-item {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-left: 4px solid var(--accent);
       border-radius: 8px;
-      padding: 1.2rem 1.5rem;
+      overflow: hidden;
       box-shadow: var(--shadow);
+      transition: var(--transition);
     }
 
-    .exp-card .exp-header {
+    .accordion-header {
+      padding: 1.2rem 1.5rem;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 0.4rem;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition);
+    }
+
+    .accordion-header:hover {
+      background-color: rgba(74, 108, 247, 0.05);
+    }
+
+    .accordion-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
       flex-wrap: wrap;
     }
 
-    .exp-card h3 {
+    .accordion-title-group h3 {
       font-size: 1.1rem;
       color: var(--text-main);
     }
 
-    .exp-card .company {
-      font-size: 0.9rem;
+    .accordion-title-group .company {
+      font-size: 0.95rem;
       color: var(--accent);
       font-weight: 500;
     }
 
-    .exp-card .period {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+    .accordion-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .exp-card ul {
-      margin-top: 0.5rem;
+    .accordion-right .period {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .accordion-icon {
+      color: var(--accent);
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s ease;
+      background-color: rgba(0, 0, 0, 0.01);
+      border-top: 0px solid var(--border-color);
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 300px; /* 展開後的最大高度限度 */
+      padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .accordion-content ul {
       padding-left: 1.2rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
-    .exp-card li {
-      margin-bottom: 0.3rem;
+    .accordion-content li {
+      margin-bottom: 0.4rem;
     }
 
     /* Interactive Section Tabs */
@@ -268,7 +312,7 @@
       border-color: var(--accent);
     }
 
-    /* Grid Cards for Skills / Experience */
+    /* Grid Cards for Skills */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -303,38 +347,6 @@
     .card p {
       color: var(--text-muted);
       font-size: 0.95rem;
-    }
-
-    /* Timeline Section */
-    .timeline {
-      position: relative;
-      padding-left: 2rem;
-      border-left: 2px solid var(--border-color);
-      margin-top: 2rem;
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 2rem;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2.55rem;
-      top: 0.3rem;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background-color: var(--accent);
-      border: 3px solid var(--bg-color);
-    }
-
-    .timeline-date {
-      font-size: 0.85rem;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 0.3rem;
     }
 
     /* Footer */
@@ -372,6 +384,17 @@
         width: 150px;
         height: 150px;
       }
+
+      .accordion-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .accordion-right {
+        width: 100%;
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
@@ -403,50 +426,71 @@
       </div>
     </section>
 
-    <!-- 簡易工作經歷 Section -->
+    <!-- 線性摺疊工作經歷 Section -->
     <section>
       <h2 class="section-title">工作經歷摘要</h2>
-      <div class="exp-summary-grid">
+      <div class="accordion-timeline">
         
         <!-- 經歷 1 -->
-        <div class="exp-card">
-          <div class="exp-header">
-            <h3>資深視覺設計師 / 品牌行銷</h3>
-            <span class="period">2021 - 至今</span>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title-group">
+              <h3>資深視覺設計師 / 品牌行銷</h3>
+              <span class="company">｜ 某某知名電商 / 品牌公司（可替換）</span>
+            </div>
+            <div class="accordion-right">
+              <span class="period">2021 - 至今</span>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
           </div>
-          <div class="company">某某知名電商 / 品牌公司（請替換）</div>
-          <ul>
-            <li>主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃</li>
-            <li>負責線下大型展覽與快閃店之視覺設計與實體場域佈展</li>
-            <li>負責網站後台營運維護、商品上架與商品圖片商用精修</li>
-          </ul>
+          <div class="accordion-content">
+            <ul>
+              <li>主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃。</li>
+              <li>負責線下大型展覽與快閃店之視覺設計與實體場域佈展執行。</li>
+              <li>負責網站後台營運維護、商品內容上架與商用產品圖精修。</li>
+            </ul>
+          </div>
         </div>
 
         <!-- 經歷 2 -->
-        <div class="exp-card">
-          <div class="exp-header">
-            <h3>團隊 Supervisor / 設計主管</h3>
-            <span class="period">2017 - 2021</span>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title-group">
+              <h3>團隊 Supervisor / 設計主管</h3>
+              <span class="company">｜ 某某企業 / 整合行銷公司（可替換）</span>
+            </div>
+            <div class="accordion-right">
+              <span class="period">2017 - 2021</span>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
           </div>
-          <div class="company">某某企業 / 整合行銷公司（請替換）</div>
-          <ul>
-            <li>管理跨部門專案與第一線服務團隊，梳理專案與溝通流程</li>
-            <li>負責實體印刷（DM、包裝、手冊）印前作業發包與印刷廠對接</li>
-            <li>規劃社群（LINE / IG / FB）視覺風格與互動行銷圖文</li>
-          </ul>
+          <div class="accordion-content">
+            <ul>
+              <li>管理跨部門專案與第一線服務團隊，優化專案時程與內部溝通流程。</li>
+              <li>負責實體印刷（DM、包裝盒、手冊）印前作業發包與印刷廠專業對接。</li>
+              <li>規劃社群（LINE 官方帳號 / IG / FB）視覺風格與互動行銷圖文。</li>
+            </ul>
+          </div>
         </div>
 
         <!-- 經歷 3 -->
-        <div class="exp-card">
-          <div class="exp-header">
-            <h3>平面 / 視覺設計師</h3>
-            <span class="period">2014 - 2017</span>
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title-group">
+              <h3>平面 / 視覺設計師</h3>
+              <span class="company">｜ 某某設計工作室 / 公司（可替換）</span>
+            </div>
+            <div class="accordion-right">
+              <span class="period">2014 - 2017</span>
+              <i class="fa-solid fa-chevron-down accordion-icon"></i>
+            </div>
           </div>
-          <div class="company">某某設計工作室 / 公司（請替換）</div>
-          <ul>
-            <li>商業精修圖製作、美妝/消費品去背與光影修飾</li>
-            <li>協助客戶建立品牌基本識別系統與印刷周邊設計</li>
-          </ul>
+          <div class="accordion-content">
+            <ul>
+              <li>商用高階精修圖製作、美妝/消費品去背與光影質感提升。</li>
+              <li>協助客戶建立品牌 basic識別系統與實體印刷周邊商品設計。</li>
+            </ul>
+          </div>
         </div>
 
       </div>
@@ -507,28 +551,6 @@
       </div>
     </section>
 
-    <!-- Experience Timeline -->
-    <section>
-      <h2 class="section-title">職涯歷程亮點</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">10+ 年經驗資歷</div>
-          <h3>資深平面 / 視覺設計師</h3>
-          <p>主導多項電商平台視覺、品牌行銷素材、產品包裝與印刷預前製作，維持品牌 CIS 一致性。</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">團隊管理與服務優化</div>
-          <h3>團隊 Supervisor / 第一線主管經驗</h3>
-          <p>帶領客服與服務團隊，梳理服務流程，大幅提升溝通效率與客戶滿意度。</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">持續進修</div>
-          <h3>跨領域前端與 UI/UX 探索</h3>
-          <p>持續自我提升，結合視覺美學與數位網頁概念，打造優質的使用者視覺體驗。</p>
-        </div>
-      </div>
-    </section>
-
     <!-- Footer -->
     <footer id="contact">
       <p>© 2026 丘塏棋 (Maggie). All Rights Reserved.</p>
@@ -537,6 +559,12 @@
 
   <!-- JavaScript -->
   <script>
+    // Accordion Toggle for Work Experience
+    function toggleAccordion(header) {
+      const item = header.parentElement;
+      item.classList.toggle('active');
+    }
+
     // Theme Switcher (Dark / Light Mode)
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
@@ -557,7 +585,6 @@
       const cards = document.querySelectorAll('.card');
       const tabs = document.querySelectorAll('.tab-btn');
 
-      // Update active tab button style
       tabs.forEach(tab => {
         if (tab.getAttribute('onclick').includes(category)) {
           tab.classList.add('active');
@@ -566,7 +593,6 @@
         }
       });
 
-      // Filter skill cards with transition
       cards.forEach(card => {
         if (category === 'all' || card.getAttribute('data-category') === category) {
           card.style.display = 'block';
