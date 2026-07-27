@@ -21,6 +21,11 @@
       --border-color: #e9ecef;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       --transition: all 0.3s ease;
+      
+      /* 箭頭卡片專屬顏色 (參考參考圖的三色搭配) */
+      --arrow-color-1: #00a8cc;
+      --arrow-color-2: #e85a71;
+      --arrow-color-3: #2b4162;
     }
 
     [data-theme="dark"] {
@@ -32,6 +37,10 @@
       --accent-hover: #5271ff;
       --border-color: #2d2d2d;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+      --arrow-color-1: #008fae;
+      --arrow-color-2: #c94459;
+      --arrow-color-3: #3a547a;
     }
 
     * {
@@ -189,98 +198,125 @@
       border-radius: 2px;
     }
 
-    /* 點擊展開式線性工作經歷 (Accordion Timeline) */
-    .accordion-timeline {
+    /* 箭頭連貫流程樣式 (Arrow Flow Container) */
+    .arrow-flow-container {
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 1rem;
+      width: 100%;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      gap: 4px; /* 箭頭接縫間距 */
     }
 
-    .accordion-item {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-
-    .accordion-header {
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .arrow-block {
+      flex: 1;
+      position: relative;
+      color: white;
+      padding: 1.5rem 1.2rem 1.5rem 2.2rem;
       cursor: pointer;
       user-select: none;
-      transition: var(--transition);
+      transition: transform 0.2s ease, filter 0.2s ease;
+      /* CSS clip-path 裁切出左凹右凸的完美箭頭 */
+      clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%, 20px 50%);
     }
 
-    .accordion-header:hover {
-      background-color: rgba(74, 108, 247, 0.05);
+    /* 第一個箭頭左邊不需要凹進去 */
+    .arrow-block:first-child {
+      clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+      padding-left: 1.5rem;
     }
 
-    .accordion-title-group {
+    /* 多個箭頭的不同配色 */
+    .arrow-block.color-1 { background-color: var(--arrow-color-1); }
+    .arrow-block.color-2 { background-color: var(--arrow-color-2); }
+    .arrow-block.color-3 { background-color: var(--arrow-color-3); }
+
+    .arrow-block:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    .arrow-content-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.3rem;
+    }
+
+    .arrow-badge {
+      width: 36px;
+      height: 36px;
+      background-color: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .accordion-title-group h3 {
+      justify-content: center;
+      font-weight: bold;
       font-size: 1.1rem;
-      color: var(--text-main);
+      margin-bottom: 0.2rem;
     }
 
-    .accordion-title-group .company {
-      font-size: 0.95rem;
-      color: var(--accent);
-      font-weight: 500;
+    .arrow-block h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.2;
     }
 
-    .accordion-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .arrow-block .company-name {
+      font-size: 0.85rem;
+      opacity: 0.9;
     }
 
-    .accordion-right .period {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      font-weight: 500;
+    .arrow-block .period {
+      font-size: 0.8rem;
+      background-color: rgba(0, 0, 0, 0.15);
+      padding: 0.15rem 0.6rem;
+      border-radius: 12px;
+      margin-top: 0.4rem;
     }
 
-    .accordion-icon {
-      color: var(--accent);
-      font-size: 0.9rem;
+    .arrow-toggle-icon {
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      opacity: 0.8;
       transition: transform 0.3s ease;
     }
 
-    .accordion-item.active .accordion-icon {
+    .arrow-block.active .arrow-toggle-icon {
       transform: rotate(180deg);
     }
 
-    .accordion-content {
+    /* 點擊箭頭後展開的詳細說明卡片 */
+    .arrow-detail-box {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease-out, padding 0.3s ease;
-      background-color: rgba(0, 0, 0, 0.01);
-      border-top: 0px solid var(--border-color);
+      transition: max-height 0.4s ease-in-out, padding 0.3s ease, margin-top 0.3s ease;
+      box-shadow: var(--shadow);
     }
 
-    .accordion-item.active .accordion-content {
-      max-height: 300px; /* 展開後的最大高度限度 */
-      padding: 1.2rem 1.5rem 1.5rem 1.5rem;
-      border-top: 1px solid var(--border-color);
+    .arrow-detail-box.active {
+      max-height: 300px;
+      padding: 1.5rem;
+      margin-top: 0.8rem;
     }
 
-    .accordion-content ul {
+    .arrow-detail-box h4 {
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      font-size: 1.1rem;
+    }
+
+    .arrow-detail-box ul {
       padding-left: 1.2rem;
       color: var(--text-muted);
       font-size: 0.95rem;
     }
 
-    .accordion-content li {
+    .arrow-detail-box li {
       margin-bottom: 0.4rem;
     }
 
@@ -359,7 +395,7 @@
       margin-top: 4rem;
     }
 
-    /* Responsive Design */
+    /* Responsive Design for Mobile */
     @media (max-width: 768px) {
       .hero {
         grid-template-columns: 1fr;
@@ -385,15 +421,15 @@
         height: 150px;
       }
 
-      .accordion-header {
+      /* 手機上自動轉為垂直箭頭結構，避免壓縮文字 */
+      .arrow-flow-container {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
+        gap: 8px;
       }
 
-      .accordion-right {
-        width: 100%;
-        justify-content: space-between;
+      .arrow-block {
+        clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), 50% 100%, 0% calc(100% - 15px)) !important;
+        padding: 1.2rem !important;
       }
     }
   </style>
@@ -426,73 +462,57 @@
       </div>
     </section>
 
-    <!-- 線性摺疊工作經歷 Section -->
+    <!-- 箭頭圖表式工作經歷 Section -->
     <section>
-      <h2 class="section-title">工作經歷摘要</h2>
-      <div class="accordion-timeline">
+      <h2 class="section-title">職涯歷程</h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1rem;">（點擊上方箭頭階段，可展開看詳細工作內容）</p>
+      
+      <!-- 箭頭流程列 -->
+      <div class="arrow-flow-container">
         
-        <!-- 經歷 1 -->
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <div class="accordion-title-group">
-              <h3>資深視覺設計師 / 品牌行銷</h3>
-              <span class="company">｜ 某某知名電商 / 品牌公司（可替換）</span>
-            </div>
-            <div class="accordion-right">
-              <span class="period">2021 - 至今</span>
-              <i class="fa-solid fa-chevron-down accordion-icon"></i>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <ul>
-              <li>主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃。</li>
-              <li>負責線下大型展覽與快閃店之視覺設計與實體場域佈展執行。</li>
-              <li>負責網站後台營運維護、商品內容上架與商用產品圖精修。</li>
-            </ul>
+        <!-- 階段 1 -->
+        <div class="arrow-block color-1" onclick="showDetail(1, this)">
+          <div class="arrow-content-header">
+            <div class="arrow-badge">1</div>
+            <h3>資深視覺設計</h3>
+            <span class="company-name">某某電商 / 品牌</span>
+            <span class="period">2021 - 至今</span>
+            <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
           </div>
         </div>
 
-        <!-- 經歷 2 -->
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <div class="accordion-title-group">
-              <h3>團隊 Supervisor / 設計主管</h3>
-              <span class="company">｜ 某某企業 / 整合行銷公司（可替換）</span>
-            </div>
-            <div class="accordion-right">
-              <span class="period">2017 - 2021</span>
-              <i class="fa-solid fa-chevron-down accordion-icon"></i>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <ul>
-              <li>管理跨部門專案與第一線服務團隊，優化專案時程與內部溝通流程。</li>
-              <li>負責實體印刷（DM、包裝盒、手冊）印前作業發包與印刷廠專業對接。</li>
-              <li>規劃社群（LINE 官方帳號 / IG / FB）視覺風格與互動行銷圖文。</li>
-            </ul>
+        <!-- 階段 2 -->
+        <div class="arrow-block color-2" onclick="showDetail(2, this)">
+          <div class="arrow-content-header">
+            <div class="arrow-badge">2</div>
+            <h3>設計主管 / Supervisor</h3>
+            <span class="company-name">某某整合行銷</span>
+            <span class="period">2017 - 2021</span>
+            <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
           </div>
         </div>
 
-        <!-- 經歷 3 -->
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)">
-            <div class="accordion-title-group">
-              <h3>平面 / 視覺設計師</h3>
-              <span class="company">｜ 某某設計工作室 / 公司（可替換）</span>
-            </div>
-            <div class="accordion-right">
-              <span class="period">2014 - 2017</span>
-              <i class="fa-solid fa-chevron-down accordion-icon"></i>
-            </div>
-          </div>
-          <div class="accordion-content">
-            <ul>
-              <li>商用高階精修圖製作、美妝/消費品去背與光影質感提升。</li>
-              <li>協助客戶建立品牌 basic識別系統與實體印刷周邊商品設計。</li>
-            </ul>
+        <!-- 階段 3 -->
+        <div class="arrow-block color-3" onclick="showDetail(3, this)">
+          <div class="arrow-content-header">
+            <div class="arrow-badge">3</div>
+            <h3>平面 / 視覺設計師</h3>
+            <span class="company-name">某某設計工作室</span>
+            <span class="period">2014 - 2017</span>
+            <i class="fa-solid fa-chevron-down arrow-toggle-icon"></i>
           </div>
         </div>
 
+      </div>
+
+      <!-- 點擊後展開的內容顯示框 -->
+      <div class="arrow-detail-box" id="detailBox">
+        <h4 id="detailTitle">請點擊上方經歷階段</h4>
+        <ul id="detailList">
+          <li>主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃。</li>
+          <li>負責線下大型展覽與快閃店之視覺設計與實體場域佈展執行。</li>
+          <li>負責網站後台營運維護、商品內容上架與商用產品圖精修。</li>
+        </ul>
       </div>
     </section>
 
@@ -559,10 +579,61 @@
 
   <!-- JavaScript -->
   <script>
-    // Accordion Toggle for Work Experience
-    function toggleAccordion(header) {
-      const item = header.parentElement;
-      item.classList.toggle('active');
+    // 工作經歷資料數據庫
+    const experienceData = {
+      1: {
+        title: "資深視覺設計師 / 品牌行銷（某某知名電商 / 品牌公司）",
+        items: [
+          "主導電商平台全站視覺、促銷頁面與品牌 CIS 一致性規劃。",
+          "負責線下大型展覽與快閃店之視覺設計與實體場域佈展執行。",
+          "負責網站後台營運維護、商品內容上架與商用產品圖精修。"
+        ]
+      },
+      2: {
+        title: "團隊 Supervisor / 設計主管（某某企業 / 整合行銷公司）",
+        items: [
+          "管理跨部門專案與第一線服務團隊，優化專案時程與內部溝通流程。",
+          "負責實體印刷（DM、包裝盒、手冊）印前作業發包與印刷廠專業對接。",
+          "規劃社群（LINE 官方帳號 / IG / FB）視覺風格與互動行銷圖文。"
+        ]
+      },
+      3: {
+        title: "平面 / 視覺設計師（某某設計工作室 / 公司）",
+        items: [
+          "商用高階精修圖製作、美妝/消費品去背與光影質感提升。",
+          "協助客戶建立品牌識別系統與實體印刷周邊商品設計。"
+        ]
+      }
+    };
+
+    // 箭頭點擊切換效果
+    let currentStep = null;
+    function showDetail(step, element) {
+      const detailBox = document.getElementById('detailBox');
+      const detailTitle = document.getElementById('detailTitle');
+      const detailList = document.getElementById('detailList');
+      const allArrows = document.querySelectorAll('.arrow-block');
+
+      // 如果點擊同一個，就收合
+      if (currentStep === step) {
+        detailBox.classList.remove('active');
+        element.classList.remove('active');
+        currentStep = null;
+        return;
+      }
+
+      // 重置所有箭頭狀態
+      allArrows.forEach(arrow => arrow.classList.remove('active'));
+      element.classList.add('active');
+
+      // 更新內容
+      const data = experienceData[step];
+      detailTitle.textContent = data.title;
+      detailList.innerHTML = data.items.map(item => `<li>${item}</li>`).join('');
+
+      // 展開詳細框
+      detailBox.classList.add('active');
+      currentStep = step;
     }
 
     // Theme Switcher (Dark / Light Mode)
