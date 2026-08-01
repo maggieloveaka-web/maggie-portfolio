@@ -514,7 +514,7 @@
       overflow-x: auto;
       scroll-behavior: smooth;
       padding-bottom: 1rem;
-      align-items: flex-start;
+      align-items: stretch; /* 確保所有卡片高度拉平 */
     }
 
     .slider-track::-webkit-scrollbar {
@@ -585,22 +585,28 @@
     }
 
     /* -------------------------------------------------- */
-    /* BANNER 專屬樣式：維持固定高度 (140px/120px)、完整顯圖不裁切 */
+    /* BANNER 專屬樣式：固定外框尺寸、圖片完全完整呈現（不裁切） */
     /* -------------------------------------------------- */
     .portfolio-item.is-banner {
-      flex: 0 0 auto;
-      width: auto;
+      flex: 0 0 280px;
+      width: 280px;
     }
 
     .portfolio-item.is-banner .portfolio-img-wrapper {
-      width: auto;
+      width: 100%;
       height: 140px;
-      background-color: transparent;
+      background-color: rgba(0, 0, 0, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
     }
 
     .portfolio-item.is-banner .portfolio-img {
-      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
       width: auto;
+      height: auto;
       object-fit: contain;
     }
 
@@ -761,8 +767,13 @@
         order: unset;
       }
 
+      .portfolio-item.is-banner {
+        flex: 0 0 220px;
+        width: 220px;
+      }
+
       .portfolio-item.is-banner .portfolio-img-wrapper {
-        height: 120px;
+        height: 110px;
       }
 
       .portfolio-item.is-large-flyer .portfolio-img-wrapper {
