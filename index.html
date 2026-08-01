@@ -524,9 +524,9 @@
       border-radius: 3px;
     }
 
-    /* 作品卡片：等比例原圖完整呈現 */
+    /* 作品卡片：依高度 380px 等比例縮放 */
     .portfolio-item {
-      flex: 0 0 380px;
+      flex: 0 0 auto;
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -543,18 +543,18 @@
     }
 
     .portfolio-img-wrapper {
-      width: 100%;
-      height: auto;
+      height: 380px;
+      width: auto;
       overflow: hidden;
-      background-color: rgba(0,0,0,0.03);
+      background-color: rgba(0, 0, 0, 0.03);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .portfolio-img {
-      width: 100%;
-      height: auto;
+      height: 100%;
+      width: auto;
       display: block;
       object-fit: contain;
       transition: transform 0.4s ease;
@@ -693,8 +693,8 @@
         order: unset;
       }
 
-      .portfolio-item {
-        flex: 0 0 280px;
+      .portfolio-img-wrapper {
+        height: 260px;
       }
     }
   </style>
@@ -806,7 +806,6 @@
       <!-- Skills Cards Grid (2列排列) -->
       <div class="skills-grid" id="skillsGrid">
         
-        <!-- 已更新：設定這個卡片為預設 active -->
         <div class="card active" id="card-banner" data-category="visual" onclick="openPortfolio('banner', this)">
           <div class="card-icon"><i class="fa-solid fa-palette"></i></div>
           <h3>電商與 Banner 視覺設計</h3>
@@ -911,21 +910,47 @@
       }
     };
 
-    // 技能作品集數據庫 (NARS 唇膏 Campaign 已順利搬移至 banner 區塊)
+    // 技能作品集數據庫 (NARS 重新放置於第一張)
     const portfolioData = {
       banner: {
         title: "電商與 Banner 視覺設計作品",
         items: [
           { 
-            title: "NARS 奢慾緞光唇膏 Campaign Design", 
+            title: "NARS Lipsticks Campaign Design", 
             desc: "電商主視覺設計 / 商業排版與整體視覺規劃", 
             img: "./NARS%20Lipsticks-Campaign%20Design.jpg",
             fallbackImg: "./images/NARS%20Lipsticks-Campaign%20Design.jpg"
           },
-          { title: "美妝夏季促銷的主視覺 Banner", desc: "電商平台首頁大圖", img: "banner-1.jpg" },
-          { title: "品牌雙11活動切圖", desc: "促銷活動頁面設計", img: "banner-2.jpg" },
-          { title: "新品上市社群 Banner", desc: "Instagram & FB 輪播廣告", img: "banner-3.jpg" },
-          { title: "限時折扣視覺圖", desc: "EDM 電子報圖文設計", img: "banner-4.jpg" }
+          { 
+            title: "ARENCIA Brand Banner Design", 
+            desc: "品牌 Banner 視覺規劃 / 電商視覺設計", 
+            img: "./ARENCIA-Brand%20Banner%20Design%20.jpg",
+            fallbackImg: "./images/ARENCIA-Brand%20Banner%20Design%20.jpg"
+          },
+          { 
+            title: "Giorgio Armani Foundation Campaign Design", 
+            desc: "粉底液 Campaign 主視覺設計 / 商業排版", 
+            img: "./Giorgio%20Armani%20Foundation-Campaign%20Design.jpg",
+            fallbackImg: "./images/Giorgio%20Armani%20Foundation-Campaign%20Design.jpg"
+          },
+          { 
+            title: "Jo Malone Brand Banner Design", 
+            desc: "品牌 Banner 設計 / 品牌形象視覺", 
+            img: "./JoMalone-Brand%20Banner%20Design%20.jpg",
+            fallbackImg: "./images/JoMalone-Brand%20Banner%20Design%20.jpg"
+          },
+          { 
+            title: "Acqua Di Parma Campaign Design", 
+            desc: "品牌 Campaign 視覺設計 / 電商活動頁", 
+            img: "./Acqua%20Di%20Parma-Campaign%20Design.jpg",
+            fallbackImg: "./images/Acqua%20Di%20Parma-Campaign%20Design.jpg"
+          },
+          { 
+            title: "Kiehl's Brand Banner Design", 
+            desc: "品牌 Banner 設計 / 產品行銷視覺", 
+            img: "./Kiehls-Brand%20Banner%20Design%20.jpg",
+            fallbackImg: "./images/Kiehls-Brand%20Banner%20Design%20.jpg"
+          }
         ]
       },
       retouch: {
@@ -1140,7 +1165,7 @@
       const lastArrow = document.querySelectorAll('.arrow-block')[3];
       showDetail(4, lastArrow);
 
-      // 2. 預設展開「電商與 Banner 視覺設計」作品區，直接展示 NARS 主視覺大圖
+      // 2. 預設展開「電商與 Banner 視覺設計」作品區，自動展示新加入的作品集
       const bannerCard = document.getElementById('card-banner');
       openPortfolio('banner', bannerCard, true);
     });
