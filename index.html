@@ -446,7 +446,7 @@
       font-weight: 500;
     }
 
-    /* 作品滑軌容器 (Portfolio Slider Section) - 調整高度以融入完整原圖 */
+    /* 作品滑軌容器 (Portfolio Slider Section) */
     .portfolio-slider-container {
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -460,7 +460,7 @@
     }
 
     .portfolio-slider-container.active {
-      max-height: 2000px; /* 放寬高度限制，讓長圖也能完整展現 */
+      max-height: 2000px;
       padding: 1.8rem;
       margin-top: 1.5rem;
     }
@@ -512,7 +512,7 @@
       overflow-x: auto;
       scroll-behavior: smooth;
       padding-bottom: 1rem;
-      align-items: flex-start; /* 確保圖片頂端對齊 */
+      align-items: flex-start;
     }
 
     .slider-track::-webkit-scrollbar {
@@ -524,9 +524,9 @@
       border-radius: 3px;
     }
 
-    /* 作品卡片：修改為等比例原圖完整呈現 (不切圖) */
+    /* 作品卡片：等比例原圖完整呈現 */
     .portfolio-item {
-      flex: 0 0 380px; /* 加寬卡片，提升圖片細節清晰度 */
+      flex: 0 0 380px;
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -542,7 +542,6 @@
       border-color: var(--accent);
     }
 
-    /* 圖片容器：不設固定高度，讓圖片自由延伸 */
     .portfolio-img-wrapper {
       width: 100%;
       height: auto;
@@ -553,12 +552,11 @@
       justify-content: center;
     }
 
-    /* 圖片本體：百分百等比例縮放，完整呈現全圖 */
     .portfolio-img {
       width: 100%;
       height: auto;
       display: block;
-      object-fit: contain; /* 完整呈現圖片全貌，絕不截切 */
+      object-fit: contain;
       transition: transform 0.4s ease;
     }
 
@@ -644,7 +642,7 @@
       margin-top: 4rem;
     }
 
-    /* Mobile Responsive Design (手機版專屬調整) */
+    /* Mobile Responsive Design */
     @media (max-width: 768px) {
       .hero {
         grid-template-columns: 1fr;
@@ -670,12 +668,10 @@
         height: 150px;
       }
 
-      /* 手機版：技能卡片轉為單列排列 */
       .skills-grid {
         grid-template-columns: 1fr;
       }
 
-      /* 手機版：箭頭與內容成一組直向排列 */
       .arrow-flow-container {
         flex-direction: column;
         gap: 8px;
@@ -810,15 +806,15 @@
       <!-- Skills Cards Grid (2列排列) -->
       <div class="skills-grid" id="skillsGrid">
         
-        <div class="card" data-category="visual" onclick="openPortfolio('banner', this)">
+        <!-- 已更新：設定這個卡片為預設 active -->
+        <div class="card active" id="card-banner" data-category="visual" onclick="openPortfolio('banner', this)">
           <div class="card-icon"><i class="fa-solid fa-palette"></i></div>
           <h3>電商與 Banner 視覺設計</h3>
           <p>擅長各大購物平台 Banner 製作、視覺風格規劃、活動促銷頁面與品牌視覺一致性建立。</p>
           <span class="click-hint"><i class="fa-regular fa-image"></i> 點擊瀏覽相關作品</span>
         </div>
 
-        <!-- 預設啟動這個區塊 -->
-        <div class="card active" id="card-retouch" data-category="visual" onclick="openPortfolio('retouch', this)">
+        <div class="card" id="card-retouch" data-category="visual" onclick="openPortfolio('retouch', this)">
           <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
           <h3>美妝產品圖精修</h3>
           <p>專業商用商品修圖，包含材質質感提升、光影修飾、去背與產品介紹切圖設計。</p>
@@ -915,11 +911,17 @@
       }
     };
 
-    // 技能作品集數據庫
+    // 技能作品集數據庫 (NARS 唇膏 Campaign 已順利搬移至 banner 區塊)
     const portfolioData = {
       banner: {
         title: "電商與 Banner 視覺設計作品",
         items: [
+          { 
+            title: "NARS 奢慾緞光唇膏 Campaign Design", 
+            desc: "電商主視覺設計 / 商業排版與整體視覺規劃", 
+            img: "./NARS%20Lipsticks-Campaign%20Design.jpg",
+            fallbackImg: "./images/NARS%20Lipsticks-Campaign%20Design.jpg"
+          },
           { title: "美妝夏季促銷的主視覺 Banner", desc: "電商平台首頁大圖", img: "banner-1.jpg" },
           { title: "品牌雙11活動切圖", desc: "促銷活動頁面設計", img: "banner-2.jpg" },
           { title: "新品上市社群 Banner", desc: "Instagram & FB 輪播廣告", img: "banner-3.jpg" },
@@ -929,13 +931,7 @@
       retouch: {
         title: "美妝與商業產品精修作品",
         items: [
-          { 
-            title: "NARS 奢慾緞光唇膏 Campaign", 
-            desc: "人像與產品光影精修 / 商業排版規劃", 
-            img: "./NARS%20Lipsticks-Campaign%20Design.jpg",
-            fallbackImg: "./images/NARS%20Lipsticks-Campaign%20Design.jpg"
-          },
-          { title: "精華液產汁質感修圖", desc: "高階光影與瓶身反光修飾", img: "retouch-1.jpg" },
+          { title: "精華液材質質感修圖", desc: "高階光影與瓶身反光修飾", img: "retouch-1.jpg" },
           { title: "唇膏質地特寫精修", desc: "色彩校正與質感強化", img: "retouch-2.jpg" },
           { title: "保養品組合情境去背", desc: "商業去背與陰影重構", img: "retouch-3.jpg" }
         ]
@@ -1144,9 +1140,9 @@
       const lastArrow = document.querySelectorAll('.arrow-block')[3];
       showDetail(4, lastArrow);
 
-      // 2. 預設展開「美妝產品圖精修」作品區，直接完整展示 NARS 主打大圖
-      const retouchCard = document.getElementById('card-retouch');
-      openPortfolio('retouch', retouchCard, true);
+      // 2. 預設展開「電商與 Banner 視覺設計」作品區，直接展示 NARS 主視覺大圖
+      const bannerCard = document.getElementById('card-banner');
+      openPortfolio('banner', bannerCard, true);
     });
   </script>
 </body>
