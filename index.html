@@ -526,7 +526,7 @@
       border-radius: 3px;
     }
 
-    /* 預設作品卡片（給 Banner 等其他項目使用，維持原本樣式） */
+    /* 預設作品卡片 */
     .portfolio-item {
       flex: 0 0 auto;
       border-radius: 8px;
@@ -585,7 +585,7 @@
     }
 
     /* -------------------------------------------------- */
-    /* 專屬於「正方形商品精修」的放大樣式 (200x200px) */
+    /* 專屬正方形/特定樣式 (200x200px) */
     /* -------------------------------------------------- */
     .portfolio-item.is-square {
       flex: 0 0 200px;
@@ -747,7 +747,7 @@
     <!-- 4 階段箭頭流程圖 Work Experience -->
     <section>
       <h2 class="section-title">職涯發展四大階段</h2>
-      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1rem;">（點擊下方箭頭階段，可展開看詳細公司與負責職責）</p>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1rem;">（點擊上方箭頭階段，可展開看詳細公司與負責職責）</p>
       
       <!-- 箭頭 Flow -->
       <div class="arrow-flow-container" id="arrowContainer">
@@ -976,48 +976,63 @@
         items: [
           { 
             title: "Lancôme - Product Retouching", 
-            desc: "光影質感修飾 / 專櫃商業精修", 
+            desc: "高階光影質感修飾 / 專櫃美妝商業精修", 
             img: "./Lancome%20-%20Product%20Retouching.jpg",
             fallbackImg: "./images/Lancome%20-%20Product%20Retouching.jpg"
           },
           { 
             title: "Paco Rabanne - Product Retouching", 
-            desc: "瓶身材質與金屬光澤強化", 
+            desc: "瓶身材質與金屬光澤強化 / 香水精修", 
             img: "./Paco%20Rabanne%20-%20Product%20Retouching.jpg",
             fallbackImg: "./images/Paco%20Rabanne%20-%20Product%20Retouching.jpg"
           },
           { 
             title: "Clarins - Product Retouching", 
-            desc: "商品光影重構 / 質感升級", 
+            desc: "保養品細節修飾 / 色彩校正與去背", 
             img: "./Clarins%20-%20Product%20Retouching.jpg",
             fallbackImg: "./images/Clarins%20-%20Product%20Retouching.jpg"
           },
           { 
             title: "Dior - Product Retouching", 
-            desc: "商品細節重建 / 精品質感精修", 
+            desc: "精品美妝光影重構 / 商業產品圖精修", 
             img: "./Dior%20-%20Product%20Retouching.jpg",
             fallbackImg: "./images/Dior%20-%20Product%20Retouching.jpg"
           },
           { 
             title: "Estée Lauder - Product Retouching", 
-            desc: "加強光澤感 / 專櫃保養商業精修", 
+            desc: "經典保養品高階精修 / 材質質感提升", 
             img: "./Estee%20Lauder%20-%20Product%20Retouching.jpg",
             fallbackImg: "./images/Estee%20Lauder%20-%20Product%20Retouching.jpg"
           },
           { 
             title: "Giorgio Armani - Product Retouching", 
-            desc: "金屬質感重現 / 商業視覺渲染", 
+            desc: "底妝產品特寫修圖 / 去背與商業視覺渲染", 
             img: "./GA%20-%20Product%20Retouching.jpg",
             fallbackImg: "./images/GA%20-%20Product%20Retouching.jpg"
           }
         ]
       },
       print: {
-        title: "實體印刷與包裝設計作品",
+        title: "實體印刷與宣傳單張設計作品",
         items: [
-          { title: "品牌年度形象手冊", desc: "刀模設計與印前分色檔", img: "print-1.jpg" },
-          { title: "禮盒包裝盒設計", desc: "特殊燙金與材質選樣", img: "print-2.jpg" },
-          { title: "門市宣傳 DM & 酷卡", desc: "實體店面文宣設計", img: "print-3.jpg" }
+          { 
+            title: "專櫃品牌特賣檔期 Flyer", 
+            desc: "美式波普風格 / 促銷檔期強攻型實體單張與海報", 
+            img: "./Sale%20-%20Flyer%20Design.jpg",
+            fallbackImg: "./images/Sale%20-%20Flyer%20Design.jpg"
+          },
+          { 
+            title: "桐生拉麵品牌宣傳 Flyer", 
+            desc: "日式書法與插畫風格 / 餐飲品牌線下宣傳與文宣地圖", 
+            img: "./Food%20-%20Flyer%20Design.jpg",
+            fallbackImg: "./images/Food%20-%20Flyer%20Design.jpg"
+          },
+          { 
+            title: "專業眉型美學服務 Flyer", 
+            desc: "高級感人像光影與細緻圖文標註 / 美業活動推廣宣傳單", 
+            img: "./Eyebrow%20-%20Flyer%20Design.jpg",
+            fallbackImg: "./images/Eyebrow%20-%20Flyer%20Design.jpg"
+          }
         ]
       },
       social: {
