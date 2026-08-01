@@ -585,33 +585,27 @@
     }
 
     /* -------------------------------------------------- */
-    /* 專屬 BANNER 類別 (統一圖片尺寸與字體大小) */
+    /* BANNER 專屬樣式：維持固定高度 (140px/120px)、完整顯圖不裁切 */
     /* -------------------------------------------------- */
     .portfolio-item.is-banner {
-      flex: 0 0 240px;
-      width: 240px;
+      flex: 0 0 auto;
+      width: auto;
     }
 
     .portfolio-item.is-banner .portfolio-img-wrapper {
-      width: 100%;
+      width: auto;
       height: 140px;
+      background-color: transparent;
     }
 
     .portfolio-item.is-banner .portfolio-img {
-      width: 100%;
       height: 100%;
-      object-fit: cover;
+      width: auto;
+      object-fit: contain;
     }
 
-    .portfolio-item.is-banner .portfolio-info h5 {
-      font-size: 0.85rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
+    .portfolio-item.is-banner .portfolio-info h5,
     .portfolio-item.is-banner .portfolio-info p {
-      font-size: 0.75rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -637,7 +631,7 @@
     }
 
     /* -------------------------------------------------- */
-    /* 實體印刷 DM 專屬：統一高度以「專櫃 Flyer」為基準，寬度自動按比例縮放且不變形 */
+    /* 實體印刷 DM 專屬：直像大圖模式 */
     /* -------------------------------------------------- */
     .portfolio-item.is-large-flyer {
       flex: 0 0 auto;
@@ -765,11 +759,6 @@
 
       .arrow-detail-box {
         order: unset;
-      }
-
-      .portfolio-item.is-banner {
-        flex: 0 0 200px;
-        width: 200px;
       }
 
       .portfolio-item.is-banner .portfolio-img-wrapper {
@@ -997,7 +986,7 @@
     const portfolioData = {
       banner: {
         title: "Banner設計作品",
-        isBanner: true, // 標記為 Banner 專屬統一尺寸模式
+        isBanner: true,
         items: [
           { 
             title: "NARS - Campaign Design", 
@@ -1039,7 +1028,7 @@
       },
       retouch: {
         title: "產品商業精修作品",
-        isSquare: true, // 標記為正方形模式 (200x200px)
+        isSquare: true,
         items: [
           { 
             title: "Lancôme - Product Retouching", 
@@ -1081,7 +1070,7 @@
       },
       print: {
         title: "實體印刷設計作品",
-        isLargeFlyer: true, // 啟用等高、寬度按比例縮放的直像大圖模式
+        isLargeFlyer: true,
         items: [
           { 
             title: "專櫃品牌特賣DM設計", 
@@ -1183,12 +1172,10 @@
         const isDesktop = window.innerWidth > 768;
         if (isDesktop) {
           const currentIndex = allCards.indexOf(cardElement);
-          // 找到目前這排（Row）的最後一張卡片索引
           const endOfRowIndex = currentIndex % 2 === 0 ? currentIndex + 1 : currentIndex;
           const targetCard = allCards[endOfRowIndex] || cardElement;
           targetCard.after(sliderContainer);
         } else {
-          // 手機版（單欄）直接塞在該卡片正下方
           cardElement.after(sliderContainer);
         }
       }
@@ -1210,7 +1197,6 @@
       data.items.forEach(item => {
         const fallback = item.fallbackImg ? `onerror="this.onerror=null; this.src='${item.fallbackImg}';"` : `onerror="this.src='https://via.placeholder.com/600x400/4a6cf7/ffffff?text=${encodeURIComponent(item.title)}'"`;
         
-        // 判斷樣式類型
         let itemClass = '';
         if (data.isBanner) {
           itemClass = 'is-banner';
