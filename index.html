@@ -524,7 +524,7 @@
       border-radius: 3px;
     }
 
-    /* 作品卡片：高度固定為 50px，寬度自動依比例縮放 */
+    /* 作品卡片：高度固定為 100px，寬度自動依比例縮放 */
     .portfolio-item {
       flex: 0 0 auto;
       border-radius: 8px;
@@ -537,13 +537,13 @@
     }
 
     .portfolio-item:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
       border-color: var(--accent);
     }
 
     .portfolio-img-wrapper {
-      height: 50px;
+      height: 100px;
       width: auto;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.03);
@@ -851,8 +851,8 @@
         <div class="portfolio-header">
           <div class="portfolio-title" id="portfolioTitle"><i class="fa-solid fa-images"></i> 作品展示</div>
           <div class="slider-controls">
-            <button class="slider-btn" onclick="slideTrack(-200)"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="slider-btn" onclick="slideTrack(200)"><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="slider-btn" onclick="slideTrack(-300)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="slider-btn" onclick="slideTrack(300)"><i class="fa-solid fa-chevron-right"></i></button>
           </div>
         </div>
         <div class="slider-track" id="sliderTrack">
@@ -906,43 +906,43 @@
       }
     };
 
-    // 技能作品集數據庫
+    // 技能作品集數據庫 (更新標題)
     const portfolioData = {
       banner: {
         title: "電商與 Banner 視覺設計作品",
         items: [
           { 
-            title: "NARS Lipsticks Campaign Design", 
+            title: "NARS - Campaign Design", 
             desc: "電商主視覺設計 / 商業排版與整體視覺規劃", 
             img: "./NARS%20Lipsticks-Campaign%20Design.jpg",
             fallbackImg: "./images/NARS%20Lipsticks-Campaign%20Design.jpg"
           },
           { 
-            title: "ARENCIA Brand Banner Design", 
+            title: "ARENCIA - Brand Design", 
             desc: "品牌 Banner 視覺規劃 / 電商視覺設計", 
             img: "./ARENCIA-Brand%20Banner%20Design%20.jpg",
             fallbackImg: "./images/ARENCIA-Brand%20Banner%20Design%20.jpg"
           },
           { 
-            title: "Giorgio Armani Foundation Campaign Design", 
+            title: "GA - Campaign Design", 
             desc: "粉底液 Campaign 主視覺設計 / 商業排版", 
             img: "./Giorgio%20Armani%20Foundation-Campaign%20Design.jpg",
             fallbackImg: "./images/Giorgio%20Armani%20Foundation-Campaign%20Design.jpg"
           },
           { 
-            title: "Jo Malone Brand Banner Design", 
+            title: "JoMalone - Brand Design", 
             desc: "品牌 Banner 設計 / 品牌形象視覺", 
             img: "./JoMalone-Brand%20Banner%20Design%20.jpg",
             fallbackImg: "./images/JoMalone-Brand%20Banner%20Design%20.jpg"
           },
           { 
-            title: "Acqua Di Parma Campaign Design", 
+            title: "Acqua - Campaign Design", 
             desc: "品牌 Campaign 視覺設計 / 電商活動頁", 
             img: "./Acqua%20Di%20Parma-Campaign%20Design.jpg",
             fallbackImg: "./images/Acqua%20Di%20Parma-Campaign%20Design.jpg"
           },
           { 
-            title: "Kiehl's Brand Banner Design", 
+            title: "Kiehls - Brand Design", 
             desc: "品牌 Banner 設計 / 產品行銷視覺", 
             img: "./Kiehls-Brand%20Banner%20Design%20.jpg",
             fallbackImg: "./images/Kiehls-Brand%20Banner%20Design%20.jpg"
