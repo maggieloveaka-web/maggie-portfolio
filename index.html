@@ -448,7 +448,7 @@
 
     /* 作品滑軌容器 (Portfolio Slider Section) */
     .portfolio-slider-container {
-      grid-column: 1 / -1; /* 讓容器在 2 列網格中自動跨滿整行 */
+      grid-column: 1 / -1;
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
@@ -585,6 +585,39 @@
     }
 
     /* -------------------------------------------------- */
+    /* 專屬 BANNER 類別 (統一圖片尺寸與字體大小) */
+    /* -------------------------------------------------- */
+    .portfolio-item.is-banner {
+      flex: 0 0 240px;
+      width: 240px;
+    }
+
+    .portfolio-item.is-banner .portfolio-img-wrapper {
+      width: 100%;
+      height: 140px;
+    }
+
+    .portfolio-item.is-banner .portfolio-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portfolio-item.is-banner .portfolio-info h5 {
+      font-size: 0.85rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .portfolio-item.is-banner .portfolio-info p {
+      font-size: 0.75rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* -------------------------------------------------- */
     /* 專屬正方形樣式 (200x200px) - 美妝精修類 */
     /* -------------------------------------------------- */
     .portfolio-item.is-square {
@@ -607,19 +640,19 @@
     /* 實體印刷 DM 專屬：統一高度以「專櫃 Flyer」為基準，寬度自動按比例縮放且不變形 */
     /* -------------------------------------------------- */
     .portfolio-item.is-large-flyer {
-      flex: 0 0 auto; /* 寬度由圖片與內容自動決定 */
+      flex: 0 0 auto;
       width: auto;
     }
 
     .portfolio-item.is-large-flyer .portfolio-img-wrapper {
-      height: 320px; /* 統一設定圖片容器高度 (以專櫃 Flyer 展示效果為基準) */
+      height: 320px;
       width: auto;
       background-color: transparent;
     }
 
     .portfolio-item.is-large-flyer .portfolio-img {
       height: 100%;
-      width: auto; /* 寬度自動依比例縮放 */
+      width: auto;
       object-fit: contain;
     }
 
@@ -734,8 +767,17 @@
         order: unset;
       }
 
+      .portfolio-item.is-banner {
+        flex: 0 0 200px;
+        width: 200px;
+      }
+
+      .portfolio-item.is-banner .portfolio-img-wrapper {
+        height: 120px;
+      }
+
       .portfolio-item.is-large-flyer .portfolio-img-wrapper {
-        height: 240px; /* 手機版自動微調適應螢幕 */
+        height: 240px;
       }
     }
   </style>
@@ -955,6 +997,7 @@
     const portfolioData = {
       banner: {
         title: "Banner設計作品",
+        isBanner: true, // 標記為 Banner 專屬統一尺寸模式
         items: [
           { 
             title: "NARS - Campaign Design", 
@@ -1169,7 +1212,9 @@
         
         // 判斷樣式類型
         let itemClass = '';
-        if (data.isSquare) {
+        if (data.isBanner) {
+          itemClass = 'is-banner';
+        } else if (data.isSquare) {
           itemClass = 'is-square';
         } else if (data.isLargeFlyer) {
           itemClass = 'is-large-flyer';
