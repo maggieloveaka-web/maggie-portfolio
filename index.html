@@ -524,10 +524,10 @@
       border-radius: 3px;
     }
 
-    /* 作品卡片：依高度 380px 等比例縮放 */
+    /* 作品卡片：高度固定為 50px，寬度自動依比例縮放 */
     .portfolio-item {
       flex: 0 0 auto;
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
       border: 1px solid var(--border-color);
       background-color: var(--card-bg);
@@ -537,13 +537,13 @@
     }
 
     .portfolio-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
       border-color: var(--accent);
     }
 
     .portfolio-img-wrapper {
-      height: 380px;
+      height: 50px;
       width: auto;
       overflow: hidden;
       background-color: rgba(0, 0, 0, 0.03);
@@ -561,24 +561,24 @@
     }
 
     .portfolio-item:hover .portfolio-img {
-      transform: scale(1.02);
+      transform: scale(1.05);
     }
 
     .portfolio-info {
-      padding: 1rem 1.2rem;
+      padding: 0.6rem 0.8rem;
       border-top: 1px solid var(--border-color);
       background-color: var(--card-bg);
     }
 
     .portfolio-info h5 {
-      font-size: 1.05rem;
+      font-size: 0.9rem;
       color: var(--text-main);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
       font-weight: 700;
     }
 
     .portfolio-info p {
-      font-size: 0.85rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
@@ -691,10 +691,6 @@
 
       .arrow-detail-box {
         order: unset;
-      }
-
-      .portfolio-img-wrapper {
-        height: 260px;
       }
     }
   </style>
@@ -855,8 +851,8 @@
         <div class="portfolio-header">
           <div class="portfolio-title" id="portfolioTitle"><i class="fa-solid fa-images"></i> 作品展示</div>
           <div class="slider-controls">
-            <button class="slider-btn" onclick="slideTrack(-380)"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="slider-btn" onclick="slideTrack(380)"><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="slider-btn" onclick="slideTrack(-200)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="slider-btn" onclick="slideTrack(200)"><i class="fa-solid fa-chevron-right"></i></button>
           </div>
         </div>
         <div class="slider-track" id="sliderTrack">
@@ -910,7 +906,7 @@
       }
     };
 
-    // 技能作品集數據庫 (NARS 重新放置於第一張)
+    // 技能作品集數據庫
     const portfolioData = {
       banner: {
         title: "電商與 Banner 視覺設計作品",
