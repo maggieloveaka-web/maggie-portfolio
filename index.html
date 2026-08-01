@@ -604,23 +604,22 @@
     }
 
     /* -------------------------------------------------- */
-    /* 新增：實體印刷 DM 專屬加大顯示樣式 (寬度 240px，高度根據原圖比例自動適應，完全不變形) */
+    /* 實體印刷 DM 專屬：統一高度以「專櫃 Flyer」為基準，寬度自動按比例縮放且不變形 */
     /* -------------------------------------------------- */
     .portfolio-item.is-large-flyer {
-      flex: 0 0 240px;
-      width: 240px;
+      flex: 0 0 auto; /* 寬度由圖片與內容自動決定 */
+      width: auto;
     }
 
     .portfolio-item.is-large-flyer .portfolio-img-wrapper {
-      width: 240px;
-      height: auto;
-      max-height: 350px; /* 控制最大高度，兼顧視覺張力與排版 */
-      background-color: #f1f3f5;
+      height: 320px; /* 統一設定圖片容器高度 (以專櫃 Flyer 展示效果為基準) */
+      width: auto;
+      background-color: transparent;
     }
 
     .portfolio-item.is-large-flyer .portfolio-img {
-      width: 100%;
-      height: auto;
+      height: 100%;
+      width: auto; /* 寬度自動依比例縮放 */
       object-fit: contain;
     }
 
@@ -735,9 +734,8 @@
         order: unset;
       }
 
-      .portfolio-item.is-large-flyer {
-        flex: 0 0 200px;
-        width: 200px;
+      .portfolio-item.is-large-flyer .portfolio-img-wrapper {
+        height: 240px; /* 手機版自動微調適應螢幕 */
       }
     }
   </style>
@@ -1040,7 +1038,7 @@
       },
       print: {
         title: "實體印刷與宣傳單張設計作品",
-        isLargeFlyer: true, // 啟用實體印刷專屬的大圖比例，保持不變形
+        isLargeFlyer: true, // 啟用等高、寬度按比例縮放的直像大圖模式
         items: [
           { 
             title: "專櫃品牌特賣檔期 Flyer", 
