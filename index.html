@@ -877,7 +877,7 @@
   </div>
 
   <!-- JavaScript -->
-  <script>
+ <script>
     // 職涯經歷數據
     const experienceData = {
       1: {
@@ -1040,11 +1040,21 @@
       const sliderContainer = document.getElementById('portfolioSlider');
       const portfolioTitle = document.getElementById('portfolioTitle');
       const sliderTrack = document.getElementById('sliderTrack');
-      const allCards = document.querySelectorAll('.card');
+      const allCards = Array.from(document.querySelectorAll('.skills-grid > .card'));
 
-      // 動態將作品展示容器移動到當前點擊的卡片正下方
+      // 計算插入位置：判斷是否為大螢幕 2 欄模式
       if (cardElement) {
-        cardElement.after(sliderContainer);
+        const isDesktop = window.innerWidth > 768;
+        if (isDesktop) {
+          const currentIndex = allCards.indexOf(cardElement);
+          // 找到目前這排（Row）的最後一張卡片索引
+          const endOfRowIndex = currentIndex % 2 === 0 ? currentIndex + 1 : currentIndex;
+          const targetCard = allCards[endOfRowIndex] || cardElement;
+          targetCard.after(sliderContainer);
+        } else {
+          // 手機版（單欄）直接塞在該卡片正下方
+          cardElement.after(sliderContainer);
+        }
       }
 
       if (currentSkillKey === skillKey && !isInitial) {
@@ -1168,7 +1178,7 @@
       const lastArrow = document.querySelectorAll('.arrow-block')[3];
       showDetail(4, lastArrow);
 
-      // 2. 預設展開「Banner 視覺設計」作品區，並將其移動到第一個卡片下方
+      // 2. 預設展開「Banner 視覺設計」作品區
       const bannerCard = document.getElementById('card-banner');
       openPortfolio('banner', bannerCard, true);
     });
