@@ -448,6 +448,7 @@
 
     /* 作品滑軌容器 (Portfolio Slider Section) */
     .portfolio-slider-container {
+      grid-column: 1 / -1; /* 讓容器在 2 列網格中自動跨滿整行 */
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
@@ -462,7 +463,8 @@
     .portfolio-slider-container.active {
       max-height: 2000px;
       padding: 1.8rem;
-      margin-top: 1.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
     }
 
     .portfolio-header {
@@ -844,20 +846,20 @@
           <span class="click-hint"><i class="fa-regular fa-image"></i> 點擊瀏覽相關作品</span>
         </div>
 
-      </div>
-
-      <!-- 動態作品橫向滑軌 (Portfolio Slider Container) -->
-      <div class="portfolio-slider-container" id="portfolioSlider">
-        <div class="portfolio-header">
-          <div class="portfolio-title" id="portfolioTitle"><i class="fa-solid fa-images"></i> 作品展示</div>
-          <div class="slider-controls">
-            <button class="slider-btn" onclick="slideTrack(-300)"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="slider-btn" onclick="slideTrack(300)"><i class="fa-solid fa-chevron-right"></i></button>
+        <!-- 動態作品橫向滑軌 (Portfolio Slider Container 放進 Grid 內部) -->
+        <div class="portfolio-slider-container" id="portfolioSlider">
+          <div class="portfolio-header">
+            <div class="portfolio-title" id="portfolioTitle"><i class="fa-solid fa-images"></i> 作品展示</div>
+            <div class="slider-controls">
+              <button class="slider-btn" onclick="slideTrack(-300)"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="slider-btn" onclick="slideTrack(300)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="slider-track" id="sliderTrack">
+            <!-- JS 動態生成作品卡片 -->
           </div>
         </div>
-        <div class="slider-track" id="sliderTrack">
-          <!-- JS 動態生成作品卡片 -->
-        </div>
+
       </div>
     </section>
 
@@ -906,7 +908,7 @@
       }
     };
 
-    // 技能作品集數據庫 (更新標題)
+    // 技能作品集數據庫
     const portfolioData = {
       banner: {
         title: "Banner 視覺設計作品",
@@ -1040,6 +1042,11 @@
       const sliderTrack = document.getElementById('sliderTrack');
       const allCards = document.querySelectorAll('.card');
 
+      // 動態將作品展示容器移動到當前點擊的卡片正下方
+      if (cardElement) {
+        cardElement.after(sliderContainer);
+      }
+
       if (currentSkillKey === skillKey && !isInitial) {
         sliderContainer.classList.remove('active');
         cardElement.classList.remove('active');
@@ -1161,7 +1168,7 @@
       const lastArrow = document.querySelectorAll('.arrow-block')[3];
       showDetail(4, lastArrow);
 
-      // 2. 預設展開「電商與 Banner 視覺設計」作品區，自動展示新加入的作品集
+      // 2. 預設展開「Banner 視覺設計」作品區，並將其移動到第一個卡片下方
       const bannerCard = document.getElementById('card-banner');
       openPortfolio('banner', bannerCard, true);
     });
