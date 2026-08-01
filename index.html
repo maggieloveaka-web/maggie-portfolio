@@ -210,14 +210,13 @@
       gap: 4px;
     }
 
-    /* 電腦版：讓外層維持橫向 Display Contents，確保 4 個箭頭水平併排 */
     .arrow-item {
       display: contents;
     }
 
     .arrow-block {
       flex: 1;
-      order: 1; /* 箭頭順序留在上方 */
+      order: 1;
       position: relative;
       color: white;
       padding: 1.4rem 1rem 1.4rem 1.8rem;
@@ -293,7 +292,7 @@
       transform: rotate(180deg);
     }
 
-    /* 展開的詳細工作內容框 (電腦版統一排在最下方 order: 2) */
+    /* 展開的詳細工作內容框 */
     .arrow-detail-box {
       order: 2;
       width: 100%;
@@ -393,10 +392,10 @@
       border-color: var(--accent);
     }
 
-    /* Grid Cards for Skills */
+    /* Grid Cards for Skills (更新：固定為 2 列排列) */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
 
@@ -657,6 +656,11 @@
         height: 150px;
       }
 
+      /* 手機版：技能卡片轉為單列排列 */
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
       /* 手機版：箭頭與內容成一組直向排列 */
       .arrow-flow-container {
         flex-direction: column;
@@ -675,7 +679,6 @@
         padding: 1.2rem !important;
       }
 
-      /* 手機版：取消 order，直接接在該箭頭正下方展開 */
       .arrow-detail-box {
         order: unset;
       }
@@ -790,7 +793,7 @@
         <button class="tab-btn" onclick="filterSkills('tech')">Web & UI/UX</button>
       </div>
 
-      <!-- Skills Cards Grid -->
+      <!-- Skills Cards Grid (2列排列) -->
       <div class="skills-grid" id="skillsGrid">
         
         <div class="card" data-category="visual" onclick="openPortfolio('banner', this)">
@@ -954,7 +957,6 @@
       const allDetailBoxes = document.querySelectorAll('.arrow-detail-box');
       const targetDetailBox = document.getElementById(`detailBox-${step}`);
 
-      // 如果點擊已開啟的項目，則關閉
       if (currentStep === step) {
         targetDetailBox.classList.remove('active');
         element.classList.remove('active');
@@ -962,7 +964,6 @@
         return;
       }
 
-      // 重置所有箭頭與詳細框
       allArrows.forEach(arrow => arrow.classList.remove('active'));
       allDetailBoxes.forEach(box => {
         box.classList.remove('active');
