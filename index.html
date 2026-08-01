@@ -210,14 +210,14 @@
       gap: 4px;
     }
 
-    /* 電腦版將每個箭頭項目的外殼改為橫向平分，詳細內容區域則強制換行佔滿 100% 寬度 */
+    /* 電腦版：讓外層維持橫向 Display Contents，確保 4 個箭頭水平併排 */
     .arrow-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      display: contents;
     }
 
     .arrow-block {
+      flex: 1;
+      order: 1; /* 箭頭順序留在上方 */
       position: relative;
       color: white;
       padding: 1.4rem 1rem 1.4rem 1.8rem;
@@ -225,7 +225,6 @@
       user-select: none;
       transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
       clip-path: polygon(0% 0%, calc(100% - 18px) 0%, 100% 50%, calc(100% - 18px) 100%, 0% 100%, 18px 50%);
-      height: 100%;
     }
 
     .arrow-item:first-child .arrow-block {
@@ -294,8 +293,10 @@
       transform: rotate(180deg);
     }
 
-    /* 展開的詳細工作內容框 */
+    /* 展開的詳細工作內容框 (電腦版統一排在最下方 order: 2) */
     .arrow-detail-box {
+      order: 2;
+      width: 100%;
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 10px;
@@ -304,9 +305,6 @@
       overflow: hidden;
       transition: max-height 0.4s cubic-bezier(0, 1, 0, 1), padding 0.3s ease, margin-top 0.3s ease;
       box-shadow: var(--shadow);
-      /* 電腦版時將詳細框拉到整個 container 的最下方佔滿整列 */
-      width: 100%;
-      order: 10;
     }
 
     .arrow-detail-box.active {
@@ -659,23 +657,25 @@
         height: 150px;
       }
 
-      /* 手機版：將箭頭改為直向排列 */
+      /* 手機版：箭頭與內容成一組直向排列 */
       .arrow-flow-container {
         flex-direction: column;
         gap: 8px;
       }
 
       .arrow-item {
-        flex: 1 0 100%;
+        display: flex;
+        flex-direction: column;
         width: 100%;
       }
 
       .arrow-block {
+        order: unset;
         clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), 50% 100%, 0% calc(100% - 15px)) !important;
         padding: 1.2rem !important;
       }
 
-      /* 手機版時，詳細內容框會恢復取消 order:10，直接接在該箭頭正下方展開 */
+      /* 手機版：取消 order，直接接在該箭頭正下方展開 */
       .arrow-detail-box {
         order: unset;
       }
@@ -947,7 +947,7 @@
       }
     };
 
-    // 箭頭展開控制 (更新：支援手機版個別展開在各自箭頭下方)
+    // 箭頭展開控制
     let currentStep = null;
     function showDetail(step, element) {
       const allArrows = document.querySelectorAll('.arrow-block');
