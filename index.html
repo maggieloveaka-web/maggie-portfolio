@@ -392,7 +392,7 @@
       border-color: var(--accent);
     }
 
-    /* Grid Cards for Skills (更新：固定為 2 列排列) */
+    /* Grid Cards for Skills (固定為 2 列排列) */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -523,8 +523,9 @@
       border-radius: 3px;
     }
 
+    /* 作品卡片寬度加大，以容納高品質作品 */
     .portfolio-item {
-      flex: 0 0 280px;
+      flex: 0 0 320px;
       border-radius: 8px;
       overflow: hidden;
       border: 1px solid var(--border-color);
@@ -540,34 +541,36 @@
 
     .portfolio-img-wrapper {
       width: 100%;
-      height: 180px;
+      height: 200px;
       overflow: hidden;
       position: relative;
+      background-color: #0d0d0d;
     }
 
     .portfolio-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       transition: transform 0.4s ease;
     }
 
     .portfolio-item:hover .portfolio-img {
-      transform: scale(1.08);
+      transform: scale(1.06);
     }
 
     .portfolio-info {
-      padding: 0.8rem 1rem;
+      padding: 0.9rem 1rem;
     }
 
     .portfolio-info h5 {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       color: var(--text-main);
       margin-bottom: 0.2rem;
     }
 
     .portfolio-info p {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
     }
 
@@ -580,7 +583,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0, 0, 0, 0.88);
       justify-content: center;
       align-items: center;
       flex-direction: column;
@@ -592,18 +595,19 @@
     }
 
     .lightbox-img {
-      max-width: 90%;
+      max-width: 92%;
       max-height: 80vh;
       border-radius: 8px;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
       object-fit: contain;
     }
 
     .lightbox-caption {
       color: white;
       margin-top: 1rem;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       text-align: center;
+      letter-spacing: 0.5px;
     }
 
     .lightbox-close {
@@ -684,7 +688,7 @@
       }
 
       .portfolio-item {
-        flex: 0 0 220px;
+        flex: 0 0 250px;
       }
     }
   </style>
@@ -803,7 +807,8 @@
           <span class="click-hint"><i class="fa-regular fa-image"></i> 點擊瀏覽相關作品</span>
         </div>
 
-        <div class="card" data-category="visual" onclick="openPortfolio('retouch', this)">
+        <!-- 預設啟動這個區塊 -->
+        <div class="card active" id="card-retouch" data-category="visual" onclick="openPortfolio('retouch', this)">
           <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
           <h3>美妝產品圖精修</h3>
           <p>專業商用商品修圖，包含材質質感提升、光影修飾、去背與產品介紹切圖設計。</p>
@@ -845,8 +850,8 @@
         <div class="portfolio-header">
           <div class="portfolio-title" id="portfolioTitle"><i class="fa-solid fa-images"></i> 作品展示</div>
           <div class="slider-controls">
-            <button class="slider-btn" onclick="slideTrack(-300)"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="slider-btn" onclick="slideTrack(300)"><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="slider-btn" onclick="slideTrack(-320)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="slider-btn" onclick="slideTrack(320)"><i class="fa-solid fa-chevron-right"></i></button>
           </div>
         </div>
         <div class="slider-track" id="sliderTrack">
@@ -900,7 +905,7 @@
       }
     };
 
-    // 技能作品集數據庫
+    // 技能作品集數據庫 (包含您剛上傳的 NARS 主打視覺)
     const portfolioData = {
       banner: {
         title: "電商與 Banner 視覺設計作品",
@@ -914,6 +919,12 @@
       retouch: {
         title: "美妝與商業產品精修作品",
         items: [
+          { 
+            title: "NARS 奢慾緞光唇膏 Campaign", 
+            desc: "人像與產品光影精修 / 商業排版規劃", 
+            img: "./NARS%20Lipsticks-Campaign%20Design.jpg",
+            fallbackImg: "./images/NARS%20Lipsticks-Campaign%20Design.jpg"
+          },
           { title: "精華液產品質感修圖", desc: "高階光影與瓶身反光修飾", img: "retouch-1.jpg" },
           { title: "唇膏質地特寫精修", desc: "色彩校正與質感強化", img: "retouch-2.jpg" },
           { title: "保養品組合情境去背", desc: "商業去背與陰影重構", img: "retouch-3.jpg" }
@@ -996,13 +1007,13 @@
 
     // 打開技能對應的作品滑軌
     let currentSkillKey = null;
-    function openPortfolio(skillKey, cardElement) {
+    function openPortfolio(skillKey, cardElement, isInitial = false) {
       const sliderContainer = document.getElementById('portfolioSlider');
       const portfolioTitle = document.getElementById('portfolioTitle');
       const sliderTrack = document.getElementById('sliderTrack');
       const allCards = document.querySelectorAll('.card');
 
-      if (currentSkillKey === skillKey) {
+      if (currentSkillKey === skillKey && !isInitial) {
         sliderContainer.classList.remove('active');
         cardElement.classList.remove('active');
         currentSkillKey = null;
@@ -1010,17 +1021,19 @@
       }
 
       allCards.forEach(c => c.classList.remove('active'));
-      cardElement.classList.add('active');
+      if (cardElement) cardElement.classList.add('active');
 
       const data = portfolioData[skillKey];
       portfolioTitle.innerHTML = `<i class="fa-solid fa-images"></i> ${data.title}`;
 
       let itemsHtml = "";
       data.items.forEach(item => {
+        const fallback = item.fallbackImg ? `onerror="this.onerror=null; this.src='${item.fallbackImg}';"` : `onerror="this.src='https://via.placeholder.com/600x400/4a6cf7/ffffff?text=${encodeURIComponent(item.title)}'"`;
+        
         itemsHtml += `
-          <div class="portfolio-item" onclick="openLightbox('${item.img}', '${item.title}')">
+          <div class="portfolio-item" onclick="openLightbox('${item.img}', '${item.title}', '${item.fallbackImg || ''}')">
             <div class="portfolio-img-wrapper">
-              <img src="${item.img}" alt="${item.title}" class="portfolio-img" onerror="this.src='https://via.placeholder.com/400x300/4a6cf7/ffffff?text=${encodeURIComponent(item.title)}'">
+              <img src="${item.img}" alt="${item.title}" class="portfolio-img" ${fallback}>
             </div>
             <div class="portfolio-info">
               <h5>${item.title}</h5>
@@ -1034,9 +1047,11 @@
       sliderContainer.classList.add('active');
       currentSkillKey = skillKey;
 
-      setTimeout(() => {
-        sliderContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 200);
+      if (!isInitial) {
+        setTimeout(() => {
+          sliderContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 200);
+      }
     }
 
     // 滑軌左右按鈕
@@ -1046,14 +1061,19 @@
     }
 
     // 燈箱 Lightbox 放大功能
-    function openLightbox(imgSrc, title) {
+    function openLightbox(imgSrc, title, fallbackImg) {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightboxImg');
       const lightboxCaption = document.getElementById('lightboxCaption');
 
       lightboxImg.src = imgSrc;
       lightboxImg.onerror = function() {
-        this.src = `https://via.placeholder.com/800x600/4a6cf7/ffffff?text=${encodeURIComponent(title)}`;
+        if (fallbackImg) {
+          this.src = fallbackImg;
+          this.onerror = null;
+        } else {
+          this.src = `https://via.placeholder.com/1000x600/4a6cf7/ffffff?text=${encodeURIComponent(title)}`;
+        }
       };
       lightboxCaption.textContent = title;
       lightbox.classList.add('active');
@@ -1108,10 +1128,15 @@
       });
     }
 
-    // 預設展開第 4 階段經歷
+    // 頁面初次載入時的初始化
     window.addEventListener('DOMContentLoaded', () => {
+      // 1. 預設展開第 4 階段職涯經歷
       const lastArrow = document.querySelectorAll('.arrow-block')[3];
       showDetail(4, lastArrow);
+
+      // 2. 預設展開「美妝產品圖精修」作品區，直接展示全新的 NARS 大圖作品
+      const retouchCard = document.getElementById('card-retouch');
+      openPortfolio('retouch', retouchCard, true);
     });
   </script>
 </body>
