@@ -526,7 +526,7 @@
       border-radius: 3px;
     }
 
-    /* 作品卡片：高度固定為 100px，寬度自動依比例縮放 */
+    /* 預設作品卡片（給 Banner 等其他項目使用，維持原本樣式） */
     .portfolio-item {
       flex: 0 0 auto;
       border-radius: 8px;
@@ -582,6 +582,25 @@
     .portfolio-info p {
       font-size: 0.78rem;
       color: var(--text-muted);
+    }
+
+    /* -------------------------------------------------- */
+    /* 專屬於「正方形商品精修」的放大樣式 (200x200px) */
+    /* -------------------------------------------------- */
+    .portfolio-item.is-square {
+      flex: 0 0 200px;
+      width: 200px;
+    }
+
+    .portfolio-item.is-square .portfolio-img-wrapper {
+      width: 200px;
+      height: 200px;
+    }
+
+    .portfolio-item.is-square .portfolio-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     /* 燈箱放大效果 (Lightbox) */
@@ -877,7 +896,7 @@
   </div>
 
   <!-- JavaScript -->
- <script>
+  <script>
     // 職涯經歷數據
     const experienceData = {
       1: {
@@ -953,6 +972,7 @@
       },
       retouch: {
         title: "美妝與商業產品精修作品",
+        isSquare: true, // 標記為正方形模式 (200x200px)
         items: [
           { 
             title: "Lancôme - Product Retouching", 
@@ -1107,8 +1127,11 @@
       data.items.forEach(item => {
         const fallback = item.fallbackImg ? `onerror="this.onerror=null; this.src='${item.fallbackImg}';"` : `onerror="this.src='https://via.placeholder.com/600x400/4a6cf7/ffffff?text=${encodeURIComponent(item.title)}'"`;
         
+        // 判斷是否加上 is-square class
+        const squareClass = data.isSquare ? 'is-square' : '';
+
         itemsHtml += `
-          <div class="portfolio-item" onclick="openLightbox('${item.img}', '${item.title}', '${item.fallbackImg || ''}')">
+          <div class="portfolio-item ${squareClass}" onclick="openLightbox('${item.img}', '${item.title}', '${item.fallbackImg || ''}')">
             <div class="portfolio-img-wrapper">
               <img src="${item.img}" alt="${item.title}" class="portfolio-img" ${fallback}>
             </div>
